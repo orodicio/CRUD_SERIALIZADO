@@ -1,0 +1,1 @@
+typeSearchIndex = [{"p":"Crud.serializado","l":"EscribirProductos"},{"p":"Crud.serializado","l":"MiAlmacen"},{"p":"Crud.serializado","l":"ModeloAbs"},{"p":"Crud.serializado","l":"ModeloArrayList"},{"p":"Crud.serializado","l":"Producto"}]

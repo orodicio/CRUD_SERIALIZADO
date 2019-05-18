@@ -1,4 +1,5 @@
 package Crud.serializado;
+
 /**
  * Abstract class ModeloAbs - Clase de acceso a Modelo de DATOS
  * 

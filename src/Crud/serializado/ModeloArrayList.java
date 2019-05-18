@@ -1,4 +1,5 @@
 package Crud.serializado;
+
 /**
  * Implementa la parte de Modelo de Datow
  * 
@@ -16,7 +17,6 @@ import java.io.ObjectOutputStream;
 
 public class ModeloArrayList extends ModeloAbs {
 	private ArrayList<Producto> lista;
-
 
 	public ModeloArrayList() {
 		lista = new ArrayList<Producto>();
@@ -61,76 +61,70 @@ public class ModeloArrayList extends ModeloAbs {
 	}
 
 	public void ListarMenosStockmin() {
-		
-		lista.stream().filter(producto -> producto.getStock_min() > producto.getStock()).
-		forEach(System.out::println);
-		
-	}
-	//Grabar el ArrayList en el documento 
-	public void grabarObjetos() {
-		 try{
-	         FileOutputStream fos= new FileOutputStream( "productos.objetos");
-	         ObjectOutputStream oos= new ObjectOutputStream(fos);
-	         
-	        	  lista.forEach(producto->{
-					try {
-						oos.writeObject(producto);
-					} catch (IOException e) {
-						e.printStackTrace();
-					}
-				});
-	                 
-	         oos.close(); 
-	         fos.close();
-	       }catch(IOException ioe){
-	            ioe.printStackTrace();
-	        }    
-	        
-	    }
-		
-	
-	
 
-	
-	
-	
-	//Metodos privados para cargar el archivo en la arrylist creada en el constructor
-	private ArrayList<Producto>rellenarLista(){
-		ArrayList<Producto>lista=new ArrayList<Producto>();
+		lista.stream().filter(producto -> producto.getStock_min() > producto.getStock()).forEach(System.out::println);
+
+	}
+
+	// Grabar el ArrayList en el documento
+	public void grabarObjetos() {
+		try {
+			FileOutputStream fos = new FileOutputStream("productos.objetos");
+			ObjectOutputStream oos = new ObjectOutputStream(fos);
+
+			lista.forEach(producto -> {
+				try {
+					oos.writeObject(producto);
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			});
+
+			oos.close();
+			fos.close();
+		} catch (IOException ioe) {
+			ioe.printStackTrace();
+		}
+
+	}
+
+	// Metodos privados para cargar el archivo en la arrylist creada en el
+	// constructor
+	private ArrayList<Producto> rellenarLista() {
+		ArrayList<Producto> lista = new ArrayList<Producto>();
 		FileInputStream fr;
 		ObjectInputStream input;
 		Producto producto;
 		try {
-		    fr = new FileInputStream( "productos.objetos");
-		    input = new ObjectInputStream (fr);
-		    producto = leer(input);
-		    while (producto!=null) {
-		    	lista.add(producto);
-		    	producto = leer(input);
-		    	} 
+			fr = new FileInputStream("productos.objetos");
+			input = new ObjectInputStream(fr);
+			producto = leer(input);
+			while (producto != null) {
+				lista.add(producto);
+				producto = leer(input);
+			}
 			input.close();
 			fr.close();
+		} catch (IOException eo) {
+			eo.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
 		}
-		    catch (IOException eo) {
-		    eo.printStackTrace();
-	        } 
-		    catch (ClassNotFoundException e) {
-				e.printStackTrace();
-			}
-	
+
 		return lista;
 	}
-	private Producto leer (ObjectInputStream input) throws ClassNotFoundException, IOException {
-		Producto producto=null;
-		
-		if (input!=null) {
-		try {
-		producto = (Producto) input.readObject();
-		} catch (EOFException eof) {
-		// Fin del fichero
+
+	private Producto leer(ObjectInputStream input) throws ClassNotFoundException, IOException {
+		Producto producto = null;
+
+		if (input != null) {
+			try {
+				producto = (Producto) input.readObject();
+			} catch (EOFException eof) {
+				// Fin del fichero
+			}
 		}
-		}
-		return producto;	
+		return producto;
 	}
-	
+
 }

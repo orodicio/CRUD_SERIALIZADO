@@ -1,4 +1,5 @@
 package Crud.serializado;
+
 /*
  * @author orodicio
  * @version 1
@@ -104,7 +105,7 @@ public class MiAlmacen {
 		} while (error);
 		return valor;
 	}
-    //Para leer las opciones, el stock maximo y minimo
+	// Para leer las opciones, el stock maximo y minimo
 
 	static private int leerEntero() {
 		boolean error = false;
@@ -130,12 +131,12 @@ public class MiAlmacen {
 
 	private static void consultar() {
 		Producto p = hallarProductoPorCodigo();
-		
+
 		if (p == null) {
 			System.out.println("El producto no se encuentra en almacen");
 			return;
-		} 
-			System.out.println("PRODUCTO " + p);
+		}
+		System.out.println("PRODUCTO " + p);
 
 	}
 
@@ -143,16 +144,16 @@ public class MiAlmacen {
 
 	private static void borrar() {
 		Producto p = hallarProductoPorCodigo();
-		
+
 		if (p == null) {
 			System.out.println("El producto no se encuentra en almacen");
 			return;
 		}
-		
+
 		System.out.println("PRODUCTO " + p);
 		System.out.println("¿Está seguro de que desea eliminar el producto?(s/n)");
 		char respuesta = Character.toLowerCase(sc.nextLine().charAt(0));
-		
+
 		if (respuesta == 's' && almacen.borrarProducto(p.getCodigo())) {
 			System.out.println("El producto se ha podido borrar");
 			return;
@@ -168,30 +169,30 @@ public class MiAlmacen {
 
 	private static void modificarPrecio() {
 		Producto p = hallarProductoPorCodigo();
-		
+
 		if (p == null) {
 			System.out.println("El producto no se encuentra en almacen");
 			return;
 		}
-		
+
 		System.out.println("PRODUCTO " + p);
 		System.out.println("PRECIO ACTUAL:" + p.getPrecio());
 		System.out.println("Introduzca nuevo precio:");
 		float precio = leerFloat();
-		
+
 		while (precio <= 0) {
 			System.out.println("El precio no puede ser menor o igual a cero. Introduzca otra cantidad:");
 			precio = leerFloat();
 		}
-		
+
 		p.setPrecio(precio);
 		boolean resultado = almacen.modificarProducto(p);
-		
+
 		if (!resultado) {
 			System.out.println("El precio no se ha podido modificar");
 			return;
 		}
-		
+
 		System.out.println("El precio se ha modificado");
 	}
 
@@ -199,18 +200,18 @@ public class MiAlmacen {
 
 	private static void comprar() {
 		Producto p = hallarProductoPorCodigo();
-		
+
 		if (p == null) {
 			System.out.println("El producto no se encuentra en almacen");
 			return;
 		}
-		
+
 		System.out.println("PRODUCTO " + p);
 		int stock = stockMayorQueCero();
 		int finalstock = p.getStock() + stock;
 		p.setStock(finalstock);
 		boolean resultado = almacen.modificarProducto(p);
-		
+
 		if (!resultado) {
 			System.out.println("El stock no se ha podido modificar");
 		}
@@ -220,24 +221,24 @@ public class MiAlmacen {
 
 	private static void vender() {
 		Producto p = hallarProductoPorCodigo();
-		
+
 		if (p == null) {
 			System.out.println("El producto no se encuentra en almacen");
 			return;
 		}
-		
+
 		System.out.println("PRODUCTO " + p);
 		int stock = stockMayorQueCero();
 		int finalStock = p.getStock() - stock;
-		
+
 		if (finalStock < 0) {
 			System.out.println("No disponemos de suficiente stock. La compra no se puede realizar.");
 			return;
 		}
-		
+
 		p.setStock(finalStock);
 		boolean resultado = almacen.modificarProducto(p);
-		
+
 		if (!resultado) {
 			System.out.println("El stock no se ha podido modificar");
 		}
@@ -246,14 +247,14 @@ public class MiAlmacen {
 	// Listado de todos los productos
 
 	private static void listar() {
-		
+
 		almacen.listarProductos();
 	}
 
 	// Listado de todos los productos con stock inferior a stock minimo
 
 	private static void listarPocoStock() {
-		
+
 		if (almacen instanceof ModeloArrayList) {
 			ModeloArrayList almacen2 = (ModeloArrayList) almacen;
 			almacen2.ListarMenosStockmin();
@@ -266,30 +267,29 @@ public class MiAlmacen {
 	private static void crear() {
 		Producto p;
 		int codigo = leerCodigo();
-		
+
 		while (almacen.buscarProducto(codigo) != null) {
 			System.out.println("Ya existe un producto con ese código.Introduzca otro distinto");
 			codigo = leerCodigo();
 		}
-		
+
 		System.out.println("Introduzca el nombre");
 		String nombre = sc.nextLine();
-		
-		
+
 		System.out.println("Introduzca el precio");
 		float precio = leerFloat();
-		
+
 		while (precio <= 0) {
 			System.out.println("El precio no puede ser menor o igual a cero. Introduzca otra cantidad:");
 			precio = leerFloat();
 		}
-		
+
 		int stock = stockMayorQueCero();
-		
+
 		System.out.println("Cantidad minima de stock");
 		int stockMin = stockMayorQueCero();
 
-		p = new Producto (codigo,nombre, stock, stockMin, precio);
+		p = new Producto(codigo, nombre, stock, stockMin, precio);
 
 		almacen.insertarProducto(p);
 	}
@@ -309,12 +309,12 @@ public class MiAlmacen {
 	private static int stockMayorQueCero() {
 		System.out.println("Introduzca el stock:");
 		int stock = leerEntero();
-		
+
 		while (stock <= 0) {
 			System.out.println("Cantidad errónea.Introduzca de nuevo la cantidad:");
 			stock = leerEntero();
 		}
-		
+
 		return stock;
 	}
 

@@ -1,4 +1,5 @@
 package Crud.serializado;
+
 /**
  * Write a description of class Producto here.
  * 
@@ -7,10 +8,10 @@ package Crud.serializado;
  */
 import java.io.Serializable;
 
-public class Producto implements Serializable{
-	
+public class Producto implements Serializable {
+
 	private static final long serialVersionUID = 1L;
-	
+
 	private int codigo; // Código del producto, se utiliza para buscar
 	private String nombre; // Nombre un texto
 	private int stock; // existencia actuales
@@ -35,7 +36,7 @@ public class Producto implements Serializable{
 
 	@Override
 	public String toString() {
-		return codigo + ":" + nombre + ":" + stock+ ":"+ stock_min + ":"+ precio;
+		return codigo + ":" + nombre + ":" + stock + ":" + stock_min + ":" + precio;
 	}
 
 	public int getStock() {
